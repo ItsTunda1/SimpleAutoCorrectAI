@@ -1,17 +1,16 @@
 #include <iostream>
 #include <map>
-#include <list>
+#include <vector>
 #include <string>
-using namespace std;
 
-typedef std::map<string, int> BasePairMap;
+typedef std::map<std::string, int> BasePairMap;
 
 
 
 
 int main()
 {
-    string text = "Hello Hi Bye";
+    std::string text = "Hello Hi Bye";
     const int wordCount = 2;
 
     BasePairMap dictionary;
@@ -30,8 +29,8 @@ int main()
 
 
 
-    string word = "";
-    list<string> words;
+    std::string word = "";
+    std::vector<std::string> words;
     for (int i = 0; i < text.length(); i++)
     {
         word += text[i];
@@ -56,17 +55,17 @@ int main()
 
 
     //Convert to Dictionary Values
-    /*int wordsEncoded[words.size()];
+    int wordsEncoded[words.size()];
     for (int i = 0; i < words.size(); i++)
     {
         wordsEncoded[i] = dictionary[words[i]];
-    }*/
+    }
 
 
 
 
 
 
-	std::cout << "\n\n\n\n\n";
-	return 0;
+    std::cout << "\n\n\n\n\n";
+    return 0;
 }
