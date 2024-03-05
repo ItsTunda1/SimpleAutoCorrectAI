@@ -9,14 +9,15 @@
 
 void MakeDictionary(std::string text[], int length)
 {
-	std::string dictionary[length];
+	std::string* dictionary = new std::string[length];
 
 
 
 	for (int i = 0; i < length; i++)
 	{
-		std::cout << i << std::endl;
+		dictionary[i] = text[i];
 	}
 
 
+	delete[] dictionary;
 }

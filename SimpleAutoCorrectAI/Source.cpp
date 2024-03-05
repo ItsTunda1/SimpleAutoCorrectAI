@@ -2,21 +2,23 @@
 #include <map>
 #include <vector>
 #include <string>
-#include "DictionaryMaker.cpp"
+//#include "DictionaryMaker.cpp"
 
 typedef std::map<std::string, int> BasePairMap;
 
 
 
+int ReadDictionary(std::string input, std::string dictionary[], int wordCount);
+
 
 int main()
 {
-    std::string text[] = { "I like to talk",
-                           "Hi Bye",
-                           "Hi Hello"};
-    const int wordCount = 7;
+    std::string text[] = { "this be but a that",
+                           "she will be one all" };
+    const int wordCount = 100;
+    std::string* dictionary1 = new std::string[wordCount];
 
-    BasePairMap dictionary;
+    //BasePairMap dictionary;
     int dataTable1[wordCount][wordCount] = { {0} };
     int dataTable2[wordCount][wordCount] = { {0} };
     int dataTable3[wordCount][wordCount] = { {0} };
@@ -25,25 +27,47 @@ int main()
 
 
 
+    
+    // Convert a words to a list of words
+    //the be to of and a in that have I it for not on with he as you do at this but his by from they we say her she or an will my one all would their what so up out if about who get which go me when make can like
+    std::string input = "the be to of and a in that have I it for not on with he as you do at this but his by from they we say her she or an will my one all would their what so up out if about who get which go me when make can like";
+    std::string word = "";
+    int index = 0;
+    for (int i = 0; i < input.length(); i++)
+    {
+        if (input[i] == ' ')
+        {
+            dictionary1[index] = word;
+            index++;
+
+            word = "";
+            continue;
+        }
+
+        word += input[i];
+    }
+    dictionary1[index] = word;
+
+
+
     //This is 1 more than the real value stored
-    dictionary["Hello"] = 1;
+    /*dictionary["Hello"] = 1;
     dictionary["Hi"] = 2;
     dictionary["I"] = 3;
     dictionary["like"] = 4;
     dictionary["to"] = 5;
     dictionary["talk"] = 6;
-    dictionary["Bye"] = 7;
-    //the be to of and a in that have I it for not on with he as you do at this but his by from they we say her she or an will my one all would their what so up out if about who get which go me when make can like
+    dictionary["Bye"] = 7;*/
 
-    std::cout << "Dictionary:" << std::endl;
+    /*std::cout << "Dictionary:" << std::endl;
     std::cout << "Hello:\t" << dictionary["Hello"] << std::endl;
-    std::cout << "Hi:\t" << dictionary["Hi"] << std::endl;
+    std::cout << "Hi:\t" << dictionary["Hi"] << std::endl;*/
 
 
 
 
 
-    for (int setI = 0; setI < 3; setI++)
+    for (int setI = 0; setI < 2; setI++)
     {
 
 
@@ -80,7 +104,7 @@ int main()
         std::vector<int> wordsEncoded;
         for (int I = 0; I < words.size(); I++)
         {
-            wordsEncoded.push_back(dictionary[words[I]] - 1);
+            wordsEncoded.push_back(ReadDictionary(words[I], dictionary1, wordCount));
             std::cout << words[I] << ":\t" << wordsEncoded[I] << std::endl;
         }
 
@@ -96,9 +120,9 @@ int main()
         }
 
         std::cout << "\nData Table 1:\n";
-        for (size_t y = 0; y < 7; y++)
+        for (size_t y = 0; y < wordCount; y++)
         {
-            for (size_t x = 0; x < 7; x++)
+            for (size_t x = 0; x < wordCount; x++)
             {
                 std::cout << dataTable1[x][y];
             }
@@ -118,9 +142,9 @@ int main()
         }
 
         std::cout << "\nData Table 2:\n";
-        for (size_t y = 0; y < 7; y++)
+        for (size_t y = 0; y < wordCount; y++)
         {
-            for (size_t x = 0; x < 7; x++)
+            for (size_t x = 0; x < wordCount; x++)
             {
                 std::cout << dataTable2[x][y];
             }
@@ -140,9 +164,9 @@ int main()
         }
 
         std::cout << "\nData Table 3:\n";
-        for (size_t x = 0; x < 7; x++)
+        for (size_t x = 0; x < wordCount; x++)
         {
-            for (size_t y = 0; y < 7; y++)
+            for (size_t y = 0; y < wordCount; y++)
             {
                 std::cout << dataTable3[x][y];
             }
@@ -162,9 +186,9 @@ int main()
         }
 
         std::cout << "\nData Table 4:\n";
-        for (size_t x = 0; x < 7; x++)
+        for (size_t x = 0; x < wordCount; x++)
         {
-            for (size_t y = 0; y < 7; y++)
+            for (size_t y = 0; y < wordCount; y++)
             {
                 std::cout << dataTable4[x][y];
             }
@@ -184,9 +208,9 @@ int main()
         }
 
         std::cout << "\nData Table 5:\n";
-        for (size_t x = 0; x < 7; x++)
+        for (size_t x = 0; x < wordCount; x++)
         {
-            for (size_t y = 0; y < 7; y++)
+            for (size_t y = 0; y < wordCount; y++)
             {
                 std::cout << dataTable5[x][y];
             }
@@ -198,10 +222,44 @@ int main()
     }
 
 
-    MakeDictionary(text, 3);
-
+    //MakeDictionary(text, 3);
+    delete[] dictionary1;
 
 
     std::cout << "\n\n\n\n\n";
     return 0;
+}
+
+
+
+
+
+
+/*void MakeDictionary(std::string text[], int length)
+{
+    //std::string* dictionary = new std::string[length];
+
+
+
+    for (int i = 0; i < length; i++)
+    {
+        dictionary1[i] = text[i];
+    }
+
+
+    //delete[] dictionary;
+}*/
+
+
+
+
+int ReadDictionary(std::string input, std::string dictionary[], int wordCount)
+{
+    for (int i = 0; i < wordCount; i++)
+    {
+        if (input == dictionary[i])
+            return i;
+    }
+
+    return -1;
 }
