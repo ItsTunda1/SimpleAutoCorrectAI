@@ -17,7 +17,7 @@ DictionaryMaker::DictionaryMaker(std::string text): dictionary(new std::string[t
     int length = text.length();
     for (int i = 0; i < length; i++)
     {
-        if (text[i] == ' ')
+        if (text[i] == ' ' || text[i] == '\n')
         {
             dictionary[index] = word;
             index++;
