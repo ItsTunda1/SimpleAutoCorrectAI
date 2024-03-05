@@ -2,6 +2,7 @@
 #include <map>
 #include <vector>
 #include <string>
+#include "DictionaryMaker.cpp"
 
 typedef std::map<std::string, int> BasePairMap;
 
@@ -197,7 +198,7 @@ int main()
     }
 
 
-
+    MakeDictionary(text, 3);
 
 
 

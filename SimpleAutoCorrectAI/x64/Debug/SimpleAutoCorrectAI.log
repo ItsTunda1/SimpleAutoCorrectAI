@@ -1,2 +1,5 @@
-﻿  Source.cpp
-  SimpleAutoCorrectAI.vcxproj -> C:\Users\Colten\source\repos\SimpleAutoCorrectAI\x64\Debug\SimpleAutoCorrectAI.exe
+﻿  DictionaryMaker.cpp
+  Source.cpp
+  Generating Code...
+Source.obj : error LNK2005: "void __cdecl MakeDictionary(class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> > * const,int)" (?MakeDictionary@@YAXQEAV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@H@Z) already defined in DictionaryMaker.obj
+C:\Users\Colten\source\repos\SimpleAutoCorrectAI\x64\Debug\SimpleAutoCorrectAI.exe : fatal error LNK1169: one or more multiply defined symbols found
