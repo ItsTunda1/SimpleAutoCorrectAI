@@ -6,11 +6,11 @@
 
 class DictionaryMaker {
 
-	private:
+	public:
+		DictionaryMaker(std::string text);
+		~DictionaryMaker();
 		std::string* dictionary;
 
-	DictionaryMaker(std::string text[], int length);
-	~DictionaryMaker();
 };
 
 

@@ -8,18 +8,29 @@
 
 
 
-DictionaryMaker::DictionaryMaker(std::string text[], int length)
+DictionaryMaker::DictionaryMaker(std::string text): dictionary(new std::string[text.length()])
 {
 
-	/*for (int i = 0; i < length; i++)
-	{
-		dictionary[i] = text[i];
-	}*/
+    // Convert a words to a list of words
+    std::string word = "";
+    int index = 0;
+    int length = text.length();
+    for (int i = 0; i < length; i++)
+    {
+        if (text[i] == ' ')
+        {
+            dictionary[index] = word;
+            index++;
 
-	std::string* dictionary = new std::string[length];
+            word = "";
+            continue;
+        }
 
+        word += text[i];
+    }
+    this->dictionary[index] = word;
 }
 
 DictionaryMaker::~DictionaryMaker() {
-	delete[] dictionary;
+	delete[] this->dictionary;
 }

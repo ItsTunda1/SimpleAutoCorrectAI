@@ -13,56 +13,32 @@ int ReadDictionary(std::string input, std::string dictionary[], int wordCount);
 
 int main()
 {
-    std::string text[] = { "this be but a that",
-                           "she will be one all",
-                            "this be a make"};
-    const int wordCount = 100;
-    std::string* dictionary1 = new std::string[wordCount];
-
-    //BasePairMap dictionary;
-    int dataTable1[wordCount][wordCount] = { {0} };
-    int dataTable2[wordCount][wordCount] = { {0} };
-    int dataTable3[wordCount][wordCount] = { {0} };
-    int dataTable4[wordCount][wordCount] = { {0} };
-    int dataTable5[wordCount][wordCount] = { {0} };
+    std::string text[] = { "the I a am",
+                           "I am",
+                           "the"};
 
 
 
     
-    // Convert a words to a list of words
+    // Dictionary Setup
+
     //the be to of and a in that have I it for not on with he as you do at this but his by from they we say her she or an will my one all would their what so up out if about who get which go me when make can like
-    std::string input = "the be to of and a in that have I it for not on with he as you do at this but his by from they we say her she or an will my one all would their what so up out if about who get which go me when make can like";
-    std::string word = "";
-    int index = 0;
-    for (int i = 0; i < input.length(); i++)
+    std::string input = "the I a am";
+    const int wordCount = 4;
+    DictionaryMaker dictionaryMaker = DictionaryMaker(input);
+    std::string* dictionary = dictionaryMaker.dictionary;
+    for (size_t i = 0; i < 4; i++)
     {
-        if (input[i] == ' ')
-        {
-            dictionary1[index] = word;
-            index++;
-
-            word = "";
-            continue;
-        }
-
-        word += input[i];
+        std::cout << dictionary[i] << std::endl;
     }
-    dictionary1[index] = word;
 
 
 
-    //This is 1 more than the real value stored
-    /*dictionary["Hello"] = 1;
-    dictionary["Hi"] = 2;
-    dictionary["I"] = 3;
-    dictionary["like"] = 4;
-    dictionary["to"] = 5;
-    dictionary["talk"] = 6;
-    dictionary["Bye"] = 7;*/
+    // Layers of data tables
+    int dataTable[wordCount][wordCount][5] = {{0}};
 
-    /*std::cout << "Dictionary:" << std::endl;
-    std::cout << "Hello:\t" << dictionary["Hello"] << std::endl;
-    std::cout << "Hi:\t" << dictionary["Hi"] << std::endl;*/
+
+
 
 
 
@@ -105,7 +81,7 @@ int main()
         std::vector<int> wordsEncoded;
         for (int I = 0; I < words.size(); I++)
         {
-            wordsEncoded.push_back(ReadDictionary(words[I], dictionary1, wordCount));
+            wordsEncoded.push_back(ReadDictionary(words[I], dictionary, wordCount));
             std::cout << words[I] << ":\t" << wordsEncoded[I] << std::endl;
         }
 
@@ -117,7 +93,7 @@ int main()
         for (int i = 0; i < wordsEncoded.size() - 1; i++)
         {
             if (wordsEncoded[i] > -1)
-                dataTable1[wordsEncoded[i]][wordsEncoded[i + 1]]++;
+                dataTable[wordsEncoded[i]][wordsEncoded[i + 1]][0]++;
         }
 
         std::cout << "\nData Table 1:\n";
@@ -125,7 +101,7 @@ int main()
         {
             for (size_t x = 0; x < wordCount; x++)
             {
-                std::cout << dataTable1[x][y];
+                std::cout << dataTable[x][y][0];
             }
             std::cout << "\n";
         }
@@ -138,7 +114,7 @@ int main()
             for (int i = 0; i < wordsEncoded.size() - 2; i++)
             {
                 if (wordsEncoded[i] > -1)
-                    dataTable2[wordsEncoded[i]][wordsEncoded[i + 2]]++;
+                    dataTable[wordsEncoded[i]][wordsEncoded[i + 2]][1]++;
             }
         }
 
@@ -147,7 +123,7 @@ int main()
         {
             for (size_t x = 0; x < wordCount; x++)
             {
-                std::cout << dataTable2[x][y];
+                std::cout << dataTable[x][y][1];
             }
             std::cout << "\n";
         }
@@ -160,7 +136,7 @@ int main()
             for (int i = 0; i < wordsEncoded.size() - 3; i++)
             {
                 if (wordsEncoded[i] > -1)
-                    dataTable3[wordsEncoded[i]][wordsEncoded[i + 3]]++;
+                    dataTable[wordsEncoded[i]][wordsEncoded[i + 3]][2]++;
             }
         }
 
@@ -169,7 +145,7 @@ int main()
         {
             for (size_t y = 0; y < wordCount; y++)
             {
-                std::cout << dataTable3[x][y];
+                std::cout << dataTable[x][y][2];
             }
             std::cout << "\n";
         }
@@ -182,7 +158,7 @@ int main()
             for (int i = 0; i < wordsEncoded.size() - 4; i++)
             {
                 if (wordsEncoded[i] > -1)
-                    dataTable4[wordsEncoded[i]][wordsEncoded[i + 4]]++;
+                    dataTable[wordsEncoded[i]][wordsEncoded[i + 4]][3]++;
             }
         }
 
@@ -191,7 +167,7 @@ int main()
         {
             for (size_t y = 0; y < wordCount; y++)
             {
-                std::cout << dataTable4[x][y];
+                std::cout << dataTable[x][y][3];
             }
             std::cout << "\n";
         }
@@ -204,7 +180,7 @@ int main()
             for (int i = 0; i < wordsEncoded.size() - 5; i++)
             {
                 if (wordsEncoded[i] > -1)
-                    dataTable5[wordsEncoded[i]][wordsEncoded[i + 5]]++;
+                    dataTable[wordsEncoded[i]][wordsEncoded[i + 5]][4]++;
             }
         }
 
@@ -213,7 +189,7 @@ int main()
         {
             for (size_t y = 0; y < wordCount; y++)
             {
-                std::cout << dataTable5[x][y];
+                std::cout << dataTable[x][y][4];
             }
             std::cout << "\n";
         }
@@ -223,8 +199,6 @@ int main()
     }
 
 
-    DictionaryMaker.DictionaryMaker(text, 3);
-    delete[] dictionary1;
 
 
     std::cout << "\n\n\n\n\n";
@@ -263,4 +237,30 @@ int ReadDictionary(std::string input, std::string dictionary[], int wordCount)
     }
 
     return -1;
+}
+
+
+
+void CreateDataSet(std::vector<int> wordsEncoded, int dataTable[1][1][1], int wordCount, int scope)
+{
+
+    //Create Data Set
+    if (wordsEncoded.size() >= scope)
+    {
+        for (int i = 0; i < wordsEncoded.size() - scope; i++)
+        {
+            if (wordsEncoded[i] > -1)
+                dataTable[wordsEncoded[i]][wordsEncoded[i + scope]][scope - 1]++;
+        }
+    }
+
+    std::cout << "\nData Table " << scope << ":\n";
+    for (size_t x = 0; x < scope; x++)
+    {
+        for (size_t y = 0; y < wordCount; y++)
+        {
+            std::cout << dataTable[x][y][scope - 1];
+        }
+        std::cout << "\n";
+    }
 }
