@@ -223,7 +223,7 @@ int main()
     }
 
 
-    //DictionaryMaker.DictionaryMaker(text, 3);
+    DictionaryMaker.DictionaryMaker(text, 3);
     delete[] dictionary1;
 
 

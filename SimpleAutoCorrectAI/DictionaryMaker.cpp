@@ -16,6 +16,8 @@ DictionaryMaker::DictionaryMaker(std::string text[], int length)
 		dictionary[i] = text[i];
 	}*/
 
+	std::string* dictionary = new std::string[length];
+
 }
 
 DictionaryMaker::~DictionaryMaker() {
