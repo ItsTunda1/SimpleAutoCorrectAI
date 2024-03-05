@@ -2,7 +2,7 @@
 #include <map>
 #include <vector>
 #include <string>
-//#include "DictionaryMaker.cpp"
+#include "DictionaryMaker.h"
 
 typedef std::map<std::string, int> BasePairMap;
 
@@ -14,7 +14,8 @@ int ReadDictionary(std::string input, std::string dictionary[], int wordCount);
 int main()
 {
     std::string text[] = { "this be but a that",
-                           "she will be one all" };
+                           "she will be one all",
+                            "this be a make"};
     const int wordCount = 100;
     std::string* dictionary1 = new std::string[wordCount];
 
@@ -67,7 +68,7 @@ int main()
 
 
 
-    for (int setI = 0; setI < 2; setI++)
+    for (int setI = 0; setI < 3; setI++)
     {
 
 
@@ -222,7 +223,7 @@ int main()
     }
 
 
-    //MakeDictionary(text, 3);
+    //DictionaryMaker.DictionaryMaker(text, 3);
     delete[] dictionary1;
 
 
