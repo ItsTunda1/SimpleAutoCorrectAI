@@ -11,6 +11,7 @@ typedef std::map<std::string, int> BasePairMap;
 
 int ReadDictionary(std::string input, std::string dictionary[], int wordCount);
 void CreateDataSet(std::vector<int> wordsEncoded, int*** dataTable, int wordCount, int scope, int sentence);
+std::vector<std::string> ConvertFileToStringArray(std::string fileName);
 
 
 int main()
@@ -19,12 +20,15 @@ int main()
 
 
 
-    std::string text[] = { "we can have this",
+    /*std::string text[] = {"we can have this",
                            "ask why men change",
                            "together why children begin",
                            "long ago I ran dry",
                            "they have some other number",
-                           "I ran dry of some other number"};
+                           "I ran dry of some other number"};*/
+
+    std::vector<std::string> text;
+    text = ConvertFileToStringArray("100sentences.txt");
 
 
 
@@ -53,7 +57,9 @@ int main()
     input += temp;
     MyReadFile.close();
 
-    const int wordCount = 1000;
+
+
+    const int wordCount = lengthFile;
     DictionaryMaker dictionaryMaker = DictionaryMaker(input);
     std::string* dictionary = dictionaryMaker.dictionary;
     /*for (size_t i = 0; i < wordCount; i++)
@@ -80,12 +86,17 @@ int main()
 
 
 
+    //For missing words
+    std::vector<std::string> missingWords;
 
 
 
 
 
-    for (int setI = 0; setI < 6; setI++)
+
+
+
+    for (int setI = 0; setI < 100; setI++)
     {
 
 
@@ -124,7 +135,10 @@ int main()
         {
             wordsEncoded.push_back(ReadDictionary(words[I], dictionary, wordCount));
             std::cout << words[I] << ":\t" << wordsEncoded[I] << std::endl;
+            if (wordsEncoded[I] < 0)
+                missingWords.push_back(words[I]);
         }
+
 
 
 
@@ -141,6 +155,17 @@ int main()
     }
 
 
+
+    std::cout << "Missing Words" << std::endl;
+    for (int i = 0; i < missingWords.size(); i++)
+    {
+        std::cout << missingWords[i] << std::endl;
+    }
+
+
+
+
+    
 
     //Ask to find the next word
     std::string inputWord;
@@ -275,4 +300,24 @@ void CreateDataSet(std::vector<int> wordsEncoded, int*** dataTable, int wordCoun
             std::cout << "\n";
         }
     }*/
+}
+
+
+
+
+std::vector<std::string> ConvertFileToStringArray(std::string fileName)
+{
+    std::vector<std::string> data;
+
+    std::ifstream MyReadFile(fileName);
+
+    // Use a while loop together with the getline() function to read the file line by line
+    std::string temp;
+    while (getline(MyReadFile, temp)) {
+        // Output the text from the file
+        data.push_back(temp);
+    }
+    MyReadFile.close();
+
+    return data;
 }
