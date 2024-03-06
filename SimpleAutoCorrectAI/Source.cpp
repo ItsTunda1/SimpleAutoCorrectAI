@@ -30,7 +30,10 @@ int main()
                            "I ran dry of some other number"};*/
 
     std::vector<std::string> text;
-    text = ConvertFileToStringArray("100sentences.txt");
+    //text = ConvertFileToStringArray("100sentences.txt");
+    int sentenceSamples = 2;
+    text.push_back("the cat was the event");
+    text.push_back("he was the event");
 
 
 
@@ -98,7 +101,7 @@ int main()
 
 
 
-    for (int setI = 0; setI < 300; setI++)
+    for (int setI = 0; setI < sentenceSamples; setI++)
     {
 
 
@@ -187,12 +190,12 @@ int main()
 
         //User input
         std::cout << "\n\n\nInput a word to find the next possible words: ";
-        //std::cin >> inputWords;
-        getline(std::cin, inputWords, ' ');
-        std::cout << inputWords << std::endl;
+        std::cin >> inputWords;
+        //getline(std::cin, inputWords, ' ');
 
         //Seperate out the words
-        SentenceToWords(inputWords);
+        std::vector<std::string> sentence;
+        sentence = SentenceToWords(inputWords);
         //std::string rawInput;
         //std::vector<std::string> numbers;
         //while (getline(std::cin, rawInput, ' '))
@@ -205,36 +208,60 @@ int main()
         //}
 
 
-        /*std::vector<std::string> words;
+        std::vector<std::string> words;
 
         //Until the sentence is finished (bounded by a size)
-        int maxBound = 100;
+        int maxBound = 1;
         for (size_t i = 0; i < maxBound; i++)
         {
-            int parsedInput = ReadDictionary(inputWords, dictionary, wordCount);
-            if (parsedInput == -1)
+            std::vector<int> parsedInput;
+            int errorCount = 0;
+            for (size_t wordI = 0; wordI < sentence.size(); wordI++)
             {
-                std::cout << "Word does NOT exist in the dictionary" << std::endl;
-                break;
+                parsedInput.push_back(ReadDictionary(sentence[wordI], dictionary, wordCount));
+
+                if (parsedInput[wordI] == -1)
+                {
+                    std::cout << "'" << sentence[wordI] << "'" << " does NOT exist in the dictionary" << std::endl;
+                    errorCount++;
+                }
             }
+
+            if (errorCount > 0)
+                break;
 
             //Generate a sentence
             std::vector<std::string> possibleWords;
             for (size_t i = 0; i < wordCount; i++)
             {
-                if (dataTable[parsedInput][i][0] > 0)
+
+                //Check all parts of the input (layer limit)
+                bool checked = true;
+                for (size_t wordIndex = 0; wordIndex < 5; wordIndex++)
                 {
-                    if (i >= 1)
+                    if (parsedInput.size() <= wordIndex)     //Is this layer check possible given the size of the sentence?
                     {
-                        if (dataTable[parsedInput][i - 1][1] > 0)
-                            possibleWords.push_back(dictionary[i]);
+                        break;
                     }
-                    else
-                        possibleWords.push_back(dictionary[i]);
+
+                    if (dataTable[parsedInput[parsedInput.size() - wordIndex - 1]][i][wordIndex] == 0)
+                        checked = false;
                 }
+                if (checked == true)
+                    possibleWords.push_back(dictionary[i]);
+
+
+
             }
 
-            //Stop when done
+            std::cout << "Input Words: " << parsedInput.size() << std::endl;
+            std::cout << "Possible Words: " << possibleWords.size() << std::endl;
+            for (size_t i = 0; i < possibleWords.size(); i++)
+            {
+                std::cout << "Possible Word: " << possibleWords[i] << std::endl;
+            }
+
+            /*//Stop when done
             if (possibleWords.size() == 0)
             {
                 //Stop
@@ -245,12 +272,11 @@ int main()
             int random = rand() % possibleWords.size();
             words.push_back(possibleWords[random]);
             inputWords = possibleWords[random];
-            possibleWords.clear();
+            possibleWords.clear();*/
+
         }
 
-
-
-        //Print the sentence
+        /*//Print the sentence
         for (int i = 0; i < (int)words.size() - 1; i++)
         {
             std::cout << words[i] << " ";
@@ -365,7 +391,7 @@ std::vector<std::string> SentenceToWords(std::string sentence)
 
     for (size_t i = 0; i < sentence.length(); i++)
     {
-        if (sentence[i] == ' ')
+        if (sentence[i] == '_')
         {
             words.push_back(word);
             word = "";
