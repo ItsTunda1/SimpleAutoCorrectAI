@@ -15,6 +15,10 @@ void CreateDataSet(std::vector<int> wordsEncoded, int*** dataTable, int wordCoun
 
 int main()
 {
+    srand((int)time(0));
+
+
+
     std::string text[] = { "we can have this",
                            "ask why men change",
                            "together why children begin",
@@ -52,10 +56,10 @@ int main()
     const int wordCount = 1000;
     DictionaryMaker dictionaryMaker = DictionaryMaker(input);
     std::string* dictionary = dictionaryMaker.dictionary;
-    for (size_t i = 0; i < wordCount; i++)
+    /*for (size_t i = 0; i < wordCount; i++)
     {
         std::cout << dictionary[i] << std::endl;
-    }
+    }*/
 
 
 
@@ -142,19 +146,61 @@ int main()
     std::string inputWord;
     while(inputWord != "Exit")
     {
+
+        //User input
         std::cout << "\n\n\nInput a word to find the next possible words: ";
         std::cin >> inputWord;
-        int parsedInput = ReadDictionary(inputWord, dictionary, wordCount);
-        if (parsedInput == -1)
-            std::cout << "Word does NOT exist in the dictionary" << std::endl;
-        for (size_t i = 0; i < wordCount; i++)
+
+
+        std::vector<std::string> words;
+
+        //Until the sentence is finished (bounded by a size)
+        int maxBound = 10;
+        for (size_t i = 0; i < maxBound; i++)
         {
-            if (dataTable[parsedInput][i][0] > 0)
+            int parsedInput = ReadDictionary(inputWord, dictionary, wordCount);
+            if (parsedInput == -1)
             {
-                std::cout << dictionary[i] << std::endl;
-                std::cout << "Count: " << dataTable[parsedInput][i][0] << std::endl;
+                std::cout << "Word does NOT exist in the dictionary" << std::endl;
+                break;
             }
+
+            //Generate a sentence
+            std::vector<std::string> possibleWords;
+            for (size_t i = 0; i < wordCount; i++)
+            {
+                if (dataTable[parsedInput][i][0] > 0)
+                {
+                    possibleWords.push_back(dictionary[i]);
+                }
+            }
+
+            //Stop when done
+            if (possibleWords.size() == 0)
+            {
+                //Stop
+                break;
+            }
+
+
+            //Pick a random word                                        <<------ ADD BETTER PROPABILITIES
+            int random = rand() % possibleWords.size();
+            words.push_back(possibleWords[random]);
+            inputWord = possibleWords[random];
+            possibleWords.clear();
         }
+
+
+
+        //Print the sentence
+        for (int i = 0; i < words.size() - 1; i++)
+        {
+            std::cout << "sdsdsdsd" << " ";
+        }
+        /*if (words.size() > 0)
+            std::cout << words[words.size() - 1] << "." << std::endl;*/
+
+
     }
 
 
