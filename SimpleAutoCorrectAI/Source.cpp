@@ -182,7 +182,6 @@ int main()
                 break;
             }
 
-
             //Pick a random word                                        <<------ ADD BETTER PROPABILITIES
             int random = rand() % possibleWords.size();
             words.push_back(possibleWords[random]);
@@ -193,12 +192,13 @@ int main()
 
 
         //Print the sentence
-        for (int i = 0; i < words.size() - 1; i++)
+        for (int i = 0; i < (int)words.size() - 1; i++)
         {
-            std::cout << "sdsdsdsd" << " ";
+            std::cout << words[i] << " ";
         }
-        /*if (words.size() > 0)
-            std::cout << words[words.size() - 1] << "." << std::endl;*/
+        if (words.size() > 0)
+            std::cout << words[words.size() - 1];
+        std::cout << "." << std::endl;
 
 
     }
