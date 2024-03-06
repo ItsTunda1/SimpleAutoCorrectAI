@@ -208,10 +208,10 @@ int main()
         //}
 
 
-        std::vector<std::string> words;
+        //std::vector<std::string> words;
 
         //Until the sentence is finished (bounded by a size)
-        int maxBound = 1;
+        int maxBound = 100;
         for (size_t i = 0; i < maxBound; i++)
         {
             std::vector<int> parsedInput;
@@ -254,14 +254,9 @@ int main()
 
             }
 
-            std::cout << "Input Words: " << parsedInput.size() << std::endl;
-            std::cout << "Possible Words: " << possibleWords.size() << std::endl;
-            for (size_t i = 0; i < possibleWords.size(); i++)
-            {
-                std::cout << "Possible Word: " << possibleWords[i] << std::endl;
-            }
+            
 
-            /*//Stop when done
+            //Stop when done
             if (possibleWords.size() == 0)
             {
                 //Stop
@@ -270,20 +265,20 @@ int main()
 
             //Pick a random word                                        <<------ ADD BETTER PROPABILITIES
             int random = rand() % possibleWords.size();
-            words.push_back(possibleWords[random]);
-            inputWords = possibleWords[random];
-            possibleWords.clear();*/
+            //words.push_back(possibleWords[random]);
+            sentence.push_back(possibleWords[random]);
+            possibleWords.clear();
 
         }
 
-        /*//Print the sentence
-        for (int i = 0; i < (int)words.size() - 1; i++)
+        //Print the sentence
+        for (int i = 0; i < (int)sentence.size() - 1; i++)
         {
-            std::cout << words[i] << " ";
+            std::cout << sentence[i] << " ";
         }
-        if (words.size() > 0)
-            std::cout << words[words.size() - 1];
-        std::cout << "." << std::endl;*/
+        if (sentence.size() > 0)
+            std::cout << sentence[sentence.size() - 1];
+        std::cout << "." << std::endl;
 
 
     }
@@ -404,10 +399,10 @@ std::vector<std::string> SentenceToWords(std::string sentence)
     if (sentence[sentence.length() - 1] != ' ')
         words.push_back(word);
 
-    for (size_t i = 0; i < words.size(); i++)
+    /*for (size_t i = 0; i < words.size(); i++)
     {
         std::cout << words[i] << std::endl;
-    }
+    }*/
 
     return words;
 }
