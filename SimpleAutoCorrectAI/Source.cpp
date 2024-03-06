@@ -1,5 +1,6 @@
 #include <iostream>
 #include <fstream>
+#include <sstream>
 #include <map>
 #include <vector>
 #include <string>
@@ -206,12 +207,11 @@ int main()
 
         //User input
         std::cout << "\nInput a word to find the next possible words: ";
-        std::cin >> inputWords;
-        //getline(std::cin, inputWords, ' ');
-
+        
         //Seperate out the words
         std::vector<std::string> sentence;
-        sentence = SentenceToWords(inputWords);
+        sentence = SeparateWords(getInput());
+
         //std::string rawInput;
         //std::vector<std::string> numbers;
         //while (getline(std::cin, rawInput, ' '))
@@ -395,36 +395,40 @@ std::vector<std::string> ConvertFileToStringArray(std::string fileName)
 
 
 
-std::vector<std::string> SentenceToWords(std::string sentence)
-{
-    std::string word;
+std::vector<std::string> separateWords(std::string input) {
+    //create vector
     std::vector<std::string> words;
-
-    for (size_t i = 0; i < sentence.length(); i++)
-    {
-        if (sentence[i] == '_')
-        {
-            words.push_back(word);
-            word = "";
-            continue;
-        }
-
-        word += sentence[i];
-        //std::cout << word << std::endl;
+    
+    //create string stream
+    std::stringstream ss;
+    
+    //make sure its empty
+    ss.clear();
+    ss.str("");
+    
+    //give to ss
+    ss << input;
+    
+    //go thru each word
+    std::string temp = "";
+    while(std::getline(ss, temp, ' ')) {
+        //push to vector
+        words.push_back(temp);
     }
-    if (sentence[sentence.length() - 1] != ' ')
-        words.push_back(word);
-
-    /*for (size_t i = 0; i < words.size(); i++)
-    {
-        std::cout << words[i] << std::endl;
-    }*/
-
+    
     return words;
 }
 
 
-
+std::string getInput() {
+    //inputted string
+    std::string input = "";
+    
+    //get input and give it to string
+    std::getline(std::cin, input);
+    
+    return input;
+}
 
 
 std::vector<std::string> CheckForRepeatsInDict(std::string* dict, int wordCount)
