@@ -30,10 +30,8 @@ int main()
                            "I ran dry of some other number"};*/
 
     std::vector<std::string> text;
-    //text = ConvertFileToStringArray("100sentences.txt");
-    int sentenceSamples = 2;
-    text.push_back("the cat was the event");
-    text.push_back("he was the event");
+    text = ConvertFileToStringArray("100sentences.txt");
+    int sentenceSamples = 300;
 
 
 
@@ -237,7 +235,7 @@ int main()
 
                 //Check all parts of the input (layer limit)
                 bool checked = true;
-                for (size_t wordIndex = 0; wordIndex < 5; wordIndex++)
+                for (size_t wordIndex = 0; wordIndex < 2; wordIndex++)
                 {
                     if (parsedInput.size() <= wordIndex)     //Is this layer check possible given the size of the sentence?
                     {
