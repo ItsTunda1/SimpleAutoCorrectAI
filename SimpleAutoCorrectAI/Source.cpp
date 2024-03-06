@@ -13,6 +13,7 @@ int ReadDictionary(std::string input, std::string dictionary[], int wordCount);
 void CreateDataSet(std::vector<int> wordsEncoded, int*** dataTable, int wordCount, int scope, int sentence);
 std::vector<std::string> ConvertFileToStringArray(std::string fileName);
 std::vector<std::string> SentenceToWords(std::string sentence);
+std::vector<std::string> CheckForRepeatsInDict(std::string* dict, int wordCount);
 
 
 int main()
@@ -70,6 +71,9 @@ int main()
     {
         std::cout << dictionary[i] << std::endl;
     }*/
+
+    //Check for repeating words in the dictionary
+    //CheckForRepeatsInDict(dictionary, wordCount);
 
 
 
@@ -417,4 +421,43 @@ std::vector<std::string> SentenceToWords(std::string sentence)
     }*/
 
     return words;
+}
+
+
+
+
+
+std::vector<std::string> CheckForRepeatsInDict(std::string* dict, int wordCount)
+{
+    std::vector<std::string> allwords;
+
+    for (size_t i = 0; i < wordCount; i++)
+    {
+        allwords.push_back(dict[i]);
+    }
+
+
+    std::cout << "Repeated words:\n" << std::endl;
+
+    //For every entry
+    for (size_t i = 0; i < allwords.size(); i++)
+    {
+        std::string curWord = allwords[i];
+
+        for (size_t j = i + 1; j < allwords.size(); j++)
+        {
+            //Find if it exists
+            if (curWord == allwords[j])
+            {
+                allwords.erase(std::next(allwords.begin(), j));
+            }
+        }
+    }
+
+    for (size_t i = 0; i < allwords.size(); i++)
+    {
+        std::cout << allwords[i] << std::endl;
+    }
+
+    return allwords;
 }
