@@ -19,6 +19,7 @@ int main()
 {
     srand((int)time(0));
     bool showStats = false;
+    bool checkMissing = false;
 
 
 
@@ -31,7 +32,7 @@ int main()
 
     std::vector<std::string> text;
     text = ConvertFileToStringArray("100sentences.txt");
-    int sentenceSamples = 300;
+    int sentenceSamples = 510;
 
 
 
@@ -157,10 +158,13 @@ int main()
 
 
         //Create Data Sets
-        for (size_t i = 1; i <= 5; i++)
+        if (checkMissing == false)
         {
-            CreateDataSet(wordsEncoded, dataTable, wordCount, i, setI);
-        }        
+            for (size_t i = 1; i <= 5; i++)
+            {
+                CreateDataSet(wordsEncoded, dataTable, wordCount, i, setI);
+            }
+        }
 
 
 
@@ -181,13 +185,23 @@ int main()
 
     
 
+    //User input (filter size)
+    int filterSize = 1;
+    std::cout << "\n\n\nFilter Size (1-5): ";
+    std::cin >> filterSize;
+    if (filterSize > 5 || filterSize < 1)
+    {
+        filterSize = 1;
+        std::cout << "Cannot accept, setting to " << filterSize << std::endl;
+    }
+
     //Ask to find the next word
     std::string inputWords;
     while(inputWords != "Exit")
     {
 
         //User input
-        std::cout << "\n\n\nInput a word to find the next possible words: ";
+        std::cout << "\nInput a word to find the next possible words: ";
         std::cin >> inputWords;
         //getline(std::cin, inputWords, ' ');
 
@@ -235,7 +249,7 @@ int main()
 
                 //Check all parts of the input (layer limit)
                 bool checked = true;
-                for (size_t wordIndex = 0; wordIndex < 2; wordIndex++)
+                for (size_t wordIndex = 0; wordIndex < filterSize; wordIndex++)
                 {
                     if (parsedInput.size() <= wordIndex)     //Is this layer check possible given the size of the sentence?
                     {
