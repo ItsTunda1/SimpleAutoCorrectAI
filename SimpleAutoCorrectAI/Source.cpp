@@ -12,11 +12,13 @@ typedef std::map<std::string, int> BasePairMap;
 int ReadDictionary(std::string input, std::string dictionary[], int wordCount);
 void CreateDataSet(std::vector<int> wordsEncoded, int*** dataTable, int wordCount, int scope, int sentence);
 std::vector<std::string> ConvertFileToStringArray(std::string fileName);
+std::vector<std::string> SentenceToWords(std::string sentence);
 
 
 int main()
 {
     srand((int)time(0));
+    bool showStats = false;
 
 
 
@@ -103,7 +105,10 @@ int main()
 
         std::string word = "";
         std::vector<std::string> words;
-        std::cout << "\nText: " << text[setI] << std::endl;
+
+        if (showStats == true)
+            std::cout << "\nText: " << text[setI] << std::endl;
+
         for (int i = 0; i < text[setI].length(); i++)
         {
             if (text[setI][i] == ' ')
@@ -121,11 +126,14 @@ int main()
 
 
         //Print the words
-        std::cout << "\n\n\nParsed Words:\n";
-        /*for (auto item : words)
+        if (showStats == true)
         {
-            std::cout << item << std::endl;
-        }*/
+            std::cout << "\n\n\nParsed Words:\n";
+            for (auto item : words)
+            {
+                std::cout << item << std::endl;
+            }
+        }
 
 
 
@@ -134,7 +142,10 @@ int main()
         for (int I = 0; I < words.size(); I++)
         {
             wordsEncoded.push_back(ReadDictionary(words[I], dictionary, wordCount));
-            std::cout << words[I] << ":\t" << wordsEncoded[I] << std::endl;
+
+            if (showStats == true)
+                std::cout << words[I] << ":\t" << wordsEncoded[I] << std::endl;
+
             if (wordsEncoded[I] < 0)
                 missingWords.push_back(words[I]);
         }
@@ -156,11 +167,13 @@ int main()
 
 
 
-    std::cout << "Missing Words" << std::endl;
+    std::cout << "Missing Words:" << std::endl;
     for (int i = 0; i < missingWords.size(); i++)
     {
         std::cout << missingWords[i] << std::endl;
     }
+    if (missingWords.size() == 0)
+        std::cout << "None" << std::endl;
 
 
 
@@ -168,22 +181,37 @@ int main()
     
 
     //Ask to find the next word
-    std::string inputWord;
-    while(inputWord != "Exit")
+    std::string inputWords;
+    while(inputWords != "Exit")
     {
 
         //User input
         std::cout << "\n\n\nInput a word to find the next possible words: ";
-        std::cin >> inputWord;
+        //std::cin >> inputWords;
+        getline(std::cin, inputWords, ' ');
+        std::cout << inputWords << std::endl;
+
+        //Seperate out the words
+        SentenceToWords(inputWords);
+        //std::string rawInput;
+        //std::vector<std::string> numbers;
+        //while (getline(std::cin, rawInput, ' '))
+        //{
+        //    numbers.push_back(rawInput);
+        //}
+        //for (size_t i = 0; i < numbers.size(); i++)
+        //{
+        //    std::cout << numbers[i] << std::endl;
+        //}
 
 
-        std::vector<std::string> words;
+        /*std::vector<std::string> words;
 
         //Until the sentence is finished (bounded by a size)
         int maxBound = 100;
         for (size_t i = 0; i < maxBound; i++)
         {
-            int parsedInput = ReadDictionary(inputWord, dictionary, wordCount);
+            int parsedInput = ReadDictionary(inputWords, dictionary, wordCount);
             if (parsedInput == -1)
             {
                 std::cout << "Word does NOT exist in the dictionary" << std::endl;
@@ -196,7 +224,13 @@ int main()
             {
                 if (dataTable[parsedInput][i][0] > 0)
                 {
-                    possibleWords.push_back(dictionary[i]);
+                    if (i >= 1)
+                    {
+                        if (dataTable[parsedInput][i - 1][1] > 0)
+                            possibleWords.push_back(dictionary[i]);
+                    }
+                    else
+                        possibleWords.push_back(dictionary[i]);
                 }
             }
 
@@ -210,7 +244,7 @@ int main()
             //Pick a random word                                        <<------ ADD BETTER PROPABILITIES
             int random = rand() % possibleWords.size();
             words.push_back(possibleWords[random]);
-            inputWord = possibleWords[random];
+            inputWords = possibleWords[random];
             possibleWords.clear();
         }
 
@@ -223,7 +257,7 @@ int main()
         }
         if (words.size() > 0)
             std::cout << words[words.size() - 1];
-        std::cout << "." << std::endl;
+        std::cout << "." << std::endl;*/
 
 
     }
@@ -288,7 +322,7 @@ void CreateDataSet(std::vector<int> wordsEncoded, int*** dataTable, int wordCoun
         }
     }
 
-    std::cout << "\nData Table " << scope << ":\n";
+    //std::cout << "\nData Table " << scope << ":\n";
     /*if (scope == 1 && sentence == 5)
     {
         for (size_t x = 0; x < wordCount; x++)
@@ -320,4 +354,34 @@ std::vector<std::string> ConvertFileToStringArray(std::string fileName)
     MyReadFile.close();
 
     return data;
+}
+
+
+
+std::vector<std::string> SentenceToWords(std::string sentence)
+{
+    std::string word;
+    std::vector<std::string> words;
+
+    for (size_t i = 0; i < sentence.length(); i++)
+    {
+        if (sentence[i] == ' ')
+        {
+            words.push_back(word);
+            word = "";
+            continue;
+        }
+
+        word += sentence[i];
+        //std::cout << word << std::endl;
+    }
+    if (sentence[sentence.length() - 1] != ' ')
+        words.push_back(word);
+
+    for (size_t i = 0; i < words.size(); i++)
+    {
+        std::cout << words[i] << std::endl;
+    }
+
+    return words;
 }
