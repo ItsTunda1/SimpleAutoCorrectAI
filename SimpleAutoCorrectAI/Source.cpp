@@ -180,7 +180,7 @@ int main()
         std::vector<std::string> words;
 
         //Until the sentence is finished (bounded by a size)
-        int maxBound = 10;
+        int maxBound = 100;
         for (size_t i = 0; i < maxBound; i++)
         {
             int parsedInput = ReadDictionary(inputWord, dictionary, wordCount);
