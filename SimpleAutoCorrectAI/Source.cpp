@@ -10,7 +10,7 @@ typedef std::map<std::string, int> BasePairMap;
 
 
 int ReadDictionary(std::string input, std::string dictionary[], int wordCount);
-void CreateDataSet(std::vector<int> wordsEncoded, int*** dataTable, int wordCount, int scope);
+void CreateDataSet(std::vector<int> wordsEncoded, int*** dataTable, int wordCount, int scope, int sentence);
 
 
 int main()
@@ -129,12 +129,36 @@ int main()
         //Create Data Sets
         for (size_t i = 1; i <= 5; i++)
         {
-            CreateDataSet(wordsEncoded, dataTable, wordCount, i);
-        }
+            CreateDataSet(wordsEncoded, dataTable, wordCount, i, setI);
+        }        
 
 
 
     }
+
+
+
+    //Ask to find the next word
+    std::string inputWord;
+    while(inputWord != "Exit")
+    {
+        std::cout << "\n\n\nInput a word to find the next possible words: ";
+        std::cin >> inputWord;
+        int parsedInput = ReadDictionary(inputWord, dictionary, wordCount);
+        if (parsedInput == -1)
+            std::cout << "Word does NOT exist in the dictionary" << std::endl;
+        for (size_t i = 0; i < wordCount; i++)
+        {
+            if (dataTable[parsedInput][i][0] > 0)
+            {
+                std::cout << dictionary[i] << std::endl;
+                std::cout << "Count: " << dataTable[parsedInput][i][0] << std::endl;
+            }
+        }
+    }
+
+
+
 
 
 
@@ -180,7 +204,7 @@ int ReadDictionary(std::string input, std::string dictionary[], int wordCount)
 
 
 
-void CreateDataSet(std::vector<int> wordsEncoded, int*** dataTable, int wordCount, int scope)
+void CreateDataSet(std::vector<int> wordsEncoded, int*** dataTable, int wordCount, int scope, int sentence)
 {
 
     //Create Data Set
@@ -194,12 +218,15 @@ void CreateDataSet(std::vector<int> wordsEncoded, int*** dataTable, int wordCoun
     }
 
     std::cout << "\nData Table " << scope << ":\n";
-    /*for (size_t x = 0; x < wordCount; x++)
+    /*if (scope == 1 && sentence == 5)
     {
-        for (size_t y = 0; y < wordCount; y++)
+        for (size_t x = 0; x < wordCount; x++)
         {
-            std::cout << dataTable[x][y][scope - 1];
+            for (size_t y = 0; y < wordCount; y++)
+            {
+                std::cout << dataTable[x][y][scope - 1];
+            }
+            std::cout << "\n";
         }
-        std::cout << "\n";
     }*/
 }
