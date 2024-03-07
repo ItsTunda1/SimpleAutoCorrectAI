@@ -13,7 +13,9 @@ typedef std::map<std::string, int> BasePairMap;
 int ReadDictionary(std::string input, std::string dictionary[], int wordCount);
 void CreateDataSet(std::vector<int> wordsEncoded, int*** dataTable, int wordCount, int scope, int sentence);
 std::vector<std::string> ConvertFileToStringArray(std::string fileName);
-std::vector<std::string> SentenceToWords(std::string sentence);
+std::string getInput();
+std::vector<std::string> separateWords(std::string input);
+//std::vector<std::string> SentenceToWords(std::string sentence);
 std::vector<std::string> CheckForRepeatsInDict(std::string* dict, int wordCount);
 
 
@@ -210,21 +212,9 @@ int main()
         
         //Seperate out the words
         std::vector<std::string> sentence;
-        sentence = SeparateWords(getInput());
-
-        //std::string rawInput;
-        //std::vector<std::string> numbers;
-        //while (getline(std::cin, rawInput, ' '))
-        //{
-        //    numbers.push_back(rawInput);
-        //}
-        //for (size_t i = 0; i < numbers.size(); i++)
-        //{
-        //    std::cout << numbers[i] << std::endl;
-        //}
+        sentence = separateWords(getInput());
 
 
-        //std::vector<std::string> words;
 
         //Until the sentence is finished (bounded by a size)
         int maxBound = 100;
