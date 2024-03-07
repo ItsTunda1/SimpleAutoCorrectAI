@@ -197,6 +197,7 @@ int main()
     int filterSize = 1;
     std::cout << "\n\n\nFilter Size (1-5): ";
     std::cin >> filterSize;
+    std::cin.ignore();          //Remove the random entry after the filter input
     if (filterSize > 5 || filterSize < 1)
     {
         filterSize = 1;
