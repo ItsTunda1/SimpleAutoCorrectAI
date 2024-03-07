@@ -23,7 +23,7 @@ int main()
 {
     srand((int)time(0));
     bool showStats = false;
-    bool checkMissing = true;
+    bool checkMissing = false;
 
 
 
@@ -36,7 +36,7 @@ int main()
 
     std::vector<std::string> text;
     text = ConvertFileToStringArray("100sentences.txt");
-    int sentenceSamples = 632;
+    int sentenceSamples = 600;
 
 
 
