@@ -36,7 +36,7 @@ int main()
 
     std::vector<std::string> text;
     text = ConvertFileToStringArray("100sentences.txt");
-    int sentenceSamples = 701;
+    int sentenceSamples = 783;
 
 
 
