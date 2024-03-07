@@ -36,7 +36,7 @@ int main()
 
     std::vector<std::string> text;
     text = ConvertFileToStringArray("100sentences.txt");
-    int sentenceSamples = 628;
+    int sentenceSamples = 700;
 
 
 
@@ -76,7 +76,8 @@ int main()
     }*/
 
     //Check for repeating words in the dictionary
-    //CheckForRepeatsInDict(dictionary, wordCount);
+    if (checkMissing == true)
+        CheckForRepeatsInDict(dictionary, wordCount);
 
 
 
@@ -448,10 +449,12 @@ std::vector<std::string> CheckForRepeatsInDict(std::string* dict, int wordCount)
         }
     }
 
+    std::cout << "List of words without duplicates\n" << std::endl;
     for (size_t i = 0; i < allwords.size(); i++)
     {
         std::cout << allwords[i] << std::endl;
     }
+    std::cout << "\n" << std::endl;
 
     return allwords;
 }
