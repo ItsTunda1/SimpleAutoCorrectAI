@@ -1733,3 +1733,6 @@ challenge
 visitors
 twists
 turns
+existence
+uniqueness
+diffy-q's
