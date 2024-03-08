@@ -280,13 +280,19 @@ int main()
         }
 
         //Print the sentence
-        for (int i = 0; i < (int)sentence.size() - 1; i++)
+        for (int i = 0; i < (int)sentence.size() - 2; i++)
         {
             std::cout << sentence[i] << " ";
         }
+        if (sentence.size() > 1)
+        {
+            if (sentence[sentence.size() - 1] != ".")
+                std::cout << " ";
+            std::cout << sentence[sentence.size() - 2];
+        }
         if (sentence.size() > 0)
             std::cout << sentence[sentence.size() - 1];
-        std::cout << "." << std::endl;
+        //std::cout << "." << std::endl;
 
 
     }
@@ -378,6 +384,9 @@ std::vector<std::string> ConvertFileToStringArray(std::string fileName)
     std::string temp;
     while (getline(MyReadFile, temp)) {
         // Output the text from the file
+        //if (!(temp[temp.length() - 2] == ' ' && temp[temp.length() - 1] == '.'))
+        //    temp += " .";
+        //std::cout << temp << std::endl;               //Adding the periods
         data.push_back(temp);
     }
     MyReadFile.close();
